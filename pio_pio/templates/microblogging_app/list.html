@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<a href="{% url 'microblogging_app:post-create' %}" class="btn btn-outline-primary">Crear</a>
+<br><br>
+
+<table class="table">
+    <tr>
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Author</th>
+                <th scope="col">Tweet</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr>
+                <td><a href="{% url 'users:detail' post.author.username  %}">{{ post.author }}</a></td>
+                <td>{{ post.content }}</td>
+                
+                <td>
+                    <a href="{% url 'microblogging_app:post-detail' post.pk %}" class="btn btn-outline-primary">See more</a>
+                    {% if post.author.pk == request.user.pk %}
+                    <a href="{% url 'microblogging_app:post-update' post.pk %}" class="btn btn-outline-primary">Edit</a>
+                    <a href="{% url 'microblogging_app:post-delete' post.pk %}" class="btn btn-outline-danger">Delete</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+</table>
+
+{% if is_paginated %}
+{% include "_pagination.html" %}
+{% endif %}
+
+{% endblock %}
