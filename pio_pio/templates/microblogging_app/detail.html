@@ -1,18 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="card">
-    <div class="card-header">
-        <h5 class="card-title">Post</h5>
+<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+    <div class="col-auto d-none d-lg-block">
+        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img"
+            aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <title>Placeholder</title>
+            <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
+                dy=".3em">Profile picture</text>
+        </svg>
     </div>
-    <div class="card-body">
-    <dl class="row">
-      <dt class="col-sm-3">Author</dt>
-      <dd class="col-sm-9">{{ post.author }}</dd>
-      <dt class="col-sm-3">Content</dt>
-      <dd class="col-sm-9">{{ post.content }}</dd>
-    </dl>
-
+    <div class="col p-4 d-flex flex-column position-static">
+        <h3 class="mb-0">{{ post.author }}</h3>
+        <div class="mb-1 text-muted">Nov 12</div>
+        <p class="card-text mb-auto">{{ post.content }}</p>
+        {% if post.author.pk == request.user.pk %}
+        <br>
+        <a href="{% url 'microblogging_app:post-update' post.pk %}" class="btn btn-outline-primary">Edit</a>
+        <br>
+        <a href="{% url 'microblogging_app:post-delete' post.pk %}" class="btn btn-outline-danger">Delete</a>
+        {% endif %}
     </div>
 </div>
 
